@@ -270,6 +270,25 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
 <div class="custom-dialog" id="customPrompt"><div class="dialog-box" id="dialogInner"><h4 id="promptTitle"></h4><input id="promptInput" type="text"><div class="dialog-actions"><button class="btn-cancel" onclick="closePrompt()">إلغاء</button><button class="btn-confirm" id="promptConfirmBtn" onclick="confirmPrompt()">حسناً</button></div></div></div>
 <div class="band-menu" id="bandMenu" onclick="if(event.target==this)closeBandMenu()"><div class="band-menu-box"><div style="width:27px;height:3px;background:var(--card-border);border-radius:20px;margin:0 auto 7px auto"></div><h4 id="bandMenuTitle" style="font-weight:900;font-size:10.2px;margin-bottom:5px;color:var(--text)"></h4><button class="band-menu-item primary" onclick="handleBandAction('edit')">تعديل</button><button class="band-menu-item danger" onclick="handleBandAction('delete')">مسح</button><button class="band-menu-item" onclick="closeBandMenu()" style="background:var(--bg-soft);justify-content:center">إلغاء</button></div></div>
 <script>
+// كود السحب التلقائي (Pull) عند فتح الصفحة لجلب بيانات اليومية
+window.addEventListener('DOMContentLoaded', () => {
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz3TyAm_BWEzlgEcqjqYA6SaBMjoLzN3j51Ewb9vp6UZNL8yJespFDUKQxWA5IOvrvW/exec";
+  fetch(WEB_APP_URL + "?fileName=all_project_data.json&t=" + Date.now())
+    .then(res => res.json())
+    .then(resData => {
+      let payload = resData.data || resData;
+      let data = payload.content || payload;
+      if(data) {
+        if(data.daily) localStorage.setItem('omar_tx_v3', JSON.stringify(data.daily));
+        if(data.tasks) localStorage.setItem('omar_tasks_v1', JSON.stringify(data.tasks));
+        if(data.attendance || data.attendance_data) {
+          localStorage.setItem('att_fixed_final', JSON.stringify(data.attendance || data.attendance_data));
+        }
+        if(typeof refreshCurrent === 'function') refreshCurrent();
+      }
+    }).catch(err => {});
+});
+
 function safeParse(k,f){try{let v=localStorage.getItem(k);if(!v||v==='undefined'||v==='null')return f;let p=JSON.parse(v);return p==null?f:p;}catch(e){try{localStorage.removeItem(k);}catch(e2){}return f;}}
 function toast(m,t='ok'){let b=document.getElementById('toastBox');if(!b){b=document.createElement('div');b.id='toastBox';b.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:20000;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none';document.body.appendChild(b);}let el=document.createElement('div');el.className='toast '+(t==='ok'?'ok':'err');el.style.cssText='display:flex;gap:8px;align-items:center;background:var(--card);border:1.5px solid var(--card-border);border-radius:12px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.2);min-width:240px;max-width:340px;pointer-events:auto;';el.innerHTML=`<span>${t==='ok'?'✅':'⚠️'}</span><span style="font-size:10px;font-weight:800;flex:1">${m}</span><button onclick="this.parentElement.remove()" style="background:transparent;border:none">✕</button>`;b.appendChild(el);setTimeout(()=>{try{el.remove();}catch(e){}},3000);}
 let transactions=safeParse('omar_tx_v3', []);
@@ -498,4 +517,14 @@ function renderTotal(){
       const band=b.name;
       const items=list.filter(t=> (t.item===band || t.person===band) );
       const perMonth=Array(12).fill(0);
-      items.forEach(t=>{const d=new Date(t.dat
+      items.forEach(t=>{const d=new Date(t.date); if(!isNaN(d)) perMonth[d.getMonth()]+=(Number(t.amount)||0);});
+      const total=perMonth.reduce((a,c)=>a+c,0);
+      html+=`<tr><td style="font-weight:900">${band}</td>${perMonth.map(v=>`<td>${v?v.toLocaleString():'-'}</td>`).join('')}<td style="font-weight:900;color:var(--hero)">${total.toLocaleString()}</td></tr>`;
+    });
+    html+=`</tbody></table></div></div>`;
+  });
+  document.getElementById('t-total').innerHTML=html;
+}
+</script>
+</body>
+</html>
