@@ -71,7 +71,6 @@ body{padding:0 6px 0 6px;min-height:100dvh;margin:0;zoom:1.16}
 
 <div id="proModal" onclick="if(event.target==this)closeModal()"><div class="modal-box"><div style="padding:14px;text-align:center"><div id="modalIcon" style="width:40px;height:40px;background:#FFF1F2;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:19px">🗑️</div><div id="modalTitle" style="font-weight:900;font-size:12px;color:var(--text)">تمسح حضور اليوم ده؟</div><div id="modalDesc" style="font-size:9px;color:var(--text-soft);margin-top:3px">هيتم مسح الحضور والانصراف بس</div></div><div style="display:flex;gap:6px;padding:8px;background:var(--bg-soft);border-top:1px solid var(--card-border)"><button onclick="closeModal()" style="flex:1;background:var(--card);border:1px solid var(--card-border);padding:9px;border-radius:8px;font-weight:800;font-size:9px">إلغاء</button><button id="modalOk" onclick="confirmModal()" style="flex:1;background:#ef4444;color:#fff;border:none;padding:9px;border-radius:8px;font-weight:900;font-size:9px">مسح ✓</button></div></div></div>
 <script>
-// تم تحديث رابط الـ Web App الموحد بالرابط الصح والجديد
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz3TyAm_BWEzlgEcqjqYA6SaBMjoLzN3j51Ewb9vp6UZNL8yJespFDUKQxWA5IOvrvW/exec";
 
 let modalAction=null, modalKey=null;
@@ -80,7 +79,6 @@ function closeModal(){ document.getElementById('proModal').classList.remove('sho
 function confirmModal(){ if(modalAction==='clear'){ doClearDay(modalKey); } closeModal(); }
 let topHidden=localStorage.getItem('att_top_hidden')==='1';let curDate=new Date();let curY=curDate.getFullYear();let curM=curDate.getMonth();let activeKey=localStorage.getItem('att_active_month');if(activeKey){let p=activeKey.split('-');curY=parseInt(p[0]);curM=parseInt(p[1])-1;}let closed=JSON.parse(localStorage.getItem('att_closed')||'{}');
 
-// دالة الحفظ التلقائي في الدرايف
 function saveToDrive() {
   if (WEB_APP_URL.includes("حط_رابط")) return;
   let allData = {
@@ -97,21 +95,28 @@ function saveToDrive() {
   }).catch(err => console.log("خطأ في الحفظ:", err));
 }
 
-// دالة السحب من الدرايف
 function syncWithDrive() {
   if (WEB_APP_URL.includes("حط_رابط")) {
     alert("برجاء وضع رابط الـ Web App في كود JavaScript أولاً!");
     return;
   }
-  fetch(WEB_APP_URL + "?fileName=all_project_data.json")
+  fetch(WEB_APP_URL)
     .then(res => res.json())
-    .then(data => {
-      let payload = data.data || data;
-      if(payload && (payload.attendance || payload.attendance_data)) {
-        localStorage.setItem('att_fixed_final', JSON.stringify(payload.attendance || payload.attendance_data || {}));
-        localStorage.setItem('att_hols_fixed', JSON.stringify(payload.hols || {}));
-        localStorage.setItem('att_notes', JSON.stringify(payload.notes || {}));
+    .then(resData => {
+      let payload = resData.data || resData;
+      let dataObj = payload.content || payload;
+      if(dataObj) {
+        if(dataObj.attendance || dataObj.attendance_data) {
+          localStorage.setItem('att_fixed_final', JSON.stringify(dataObj.attendance || dataObj.attendance_data));
+        }
+        if(dataObj.hols) localStorage.setItem('att_hols_fixed', JSON.stringify(dataObj.hols));
+        if(dataObj.notes) localStorage.setItem('att_notes', JSON.stringify(dataObj.notes));
+        if(dataObj.tasks) localStorage.setItem('omar_tasks_v1', JSON.stringify(dataObj.tasks));
+        if(dataObj.daily) localStorage.setItem('omar_tx_v3', JSON.stringify(dataObj.daily));
+        alert("✅ تم سحب ومزامنة البيانات من الدرايف بنجاح!");
         location.reload();
+      } else {
+        alert("⚠️ مفيش بيانات محفوظة في الدرايف لسه!");
       }
     })
     .catch(err => alert("فشل الاتصال بالدرايف!"));
