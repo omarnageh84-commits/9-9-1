@@ -63,6 +63,26 @@ body{display:flex;justify-content:center;align-items:flex-start;background:var(-
 </div>
 <div class="toast" id="exitToast">اضغط مرة أخرى للخروج</div>
 <script>
+// سحب البيانات التلقائي (Pull) من الدرايف فور فتح التطبيق
+window.addEventListener('DOMContentLoaded', () => {
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz3TyAm_BWEzlgEcqjqYA6SaBMjoLzN3j51Ewb9vp6UZNL8yJespFDUKQxWA5IOvrvW/exec";
+  fetch(WEB_APP_URL)
+    .then(res => res.json())
+    .then(resData => {
+      let payload = resData.data || resData;
+      let dataObj = payload.content || payload;
+      if(dataObj) {
+        if(dataObj.attendance || dataObj.attendance_data) {
+          localStorage.setItem('att_fixed_final', JSON.stringify(dataObj.attendance || dataObj.attendance_data));
+        }
+        if(dataObj.hols) localStorage.setItem('att_hols_fixed', JSON.stringify(dataObj.hols));
+        if(dataObj.notes) localStorage.setItem('att_notes', JSON.stringify(dataObj.notes));
+        if(dataObj.tasks) localStorage.setItem('omar_tasks_v1', JSON.stringify(dataObj.tasks));
+        if(dataObj.daily) localStorage.setItem('omar_tx_v3', JSON.stringify(dataObj.daily));
+      }
+    }).catch(err => {});
+});
+
 // ثيمين فقط
 const themes = {
   teal: {'--bg':'#F0FDFA','--bg-soft':'#CCFBF1','--card':'#FFFFFF','--card-border':'#5EEAD4','--text':'#134E4A','--text-soft':'#0D9488','--hero':'#0F766E','--accent':'#14B8A6','--nav-bg':'rgba(255,255,255,0.92)'},
