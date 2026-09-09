@@ -1,5 +1,5 @@
-// drive-lite.js - نسخة خفيفة سريعة - متصل الآن / اترفع الآن
-window.SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // غيره بالـ URL بتاعك
+// drive-lite.js - محدث بالرابط الجديد ومتطابق تماماً مع باقي النظام
+window.SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbz3TyAm_BWEzlgEcqjqYA6SaBMjoLzN3j51Ewb9vp6UZNL8yJespFDUKQxWA5IOvrvW/exec';
 
 window.db = window.db || {
   daily: [],
@@ -16,7 +16,6 @@ try{
   if(local){
     let parsed = JSON.parse(local);
     window.db = Object.assign(window.db, parsed);
-    console.log('[DRIVE-LITE] loaded from localStorage', window.db);
   }
 }catch(e){ console.warn(e); }
 
@@ -41,19 +40,26 @@ window.saveToDrive = async function(){
     return;
   }
   try{
-    // نجمع كل البيانات
-    let payload = {
-      action: 'save',
-      timestamp: new Date().toISOString(),
-      data: window.db
+    let allData = {
+      daily: JSON.parse(localStorage.getItem('omar_tx_v3') || '[]'),
+      tasks: JSON.parse(localStorage.getItem('omar_tasks_v1') || '[]'),
+      attendance: JSON.parse(localStorage.getItem('att_fixed_final') || '{}'),
+      db: window.db,
+      timestamp: new Date().toISOString()
     };
-    // نستخدم no-cors عشان Google Apps Script
+
+    let payload = {
+      fileName: "all_project_data.json",
+      content: allData
+    };
+
     await fetch(window.SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload)
     });
+    
     window.db.lastSync = new Date().toISOString();
     window.saveToLocal();
     updateSyncStatus('اترفع الآن ✅ ' + new Date().toLocaleTimeString('ar-EG'), 'bg-emerald-50 text-emerald-700 border-emerald-200');
@@ -73,12 +79,18 @@ window.loadFromDrive = async function(){
     return;
   }
   try{
-    let res = await fetch(window.SCRIPT_URL + '?action=load&t=' + Date.now());
+    let res = await fetch(window.SCRIPT_URL + '?fileName=all_project_data.json&t=' + Date.now());
     let json = await res.json();
-    if(json && json.data){
-      window.db = Object.assign(window.db, json.data);
+    let payload = json.data || json;
+    let content = payload.content || payload;
+    
+    if(content){
+      if(content.db) window.db = Object.assign(window.db, content.db);
+      if(content.tasks) localStorage.setItem('omar_tasks_v1', JSON.stringify(content.tasks));
+      if(content.daily) localStorage.setItem('omar_tx_v3', JSON.stringify(content.daily));
+      if(content.attendance) localStorage.setItem('att_fixed_final', JSON.stringify(content.attendance));
+      
       window.saveToLocal();
-      console.log('[DRIVE-LITE] loaded from Drive', window.db);
       updateSyncStatus('متصل الآن 🟢 ' + new Date().toLocaleTimeString('ar-EG'), 'bg-emerald-50 text-emerald-700 border-emerald-200');
     } else {
       updateSyncStatus('متصل الآن 🟢', 'bg-emerald-50 text-emerald-700 border-emerald-200');
@@ -91,10 +103,8 @@ window.loadFromDrive = async function(){
   else if(window.renderContent) window.renderContent();
 }
 
-// تحميل تلقائي عند فتح البرنامج
 window.addEventListener('DOMContentLoaded', ()=>{
   window.loadFromDrive();
 });
 
-// لو النت رجع، حاول تحمل تاني
 window.addEventListener('online', ()=>{ window.loadFromDrive(); });
