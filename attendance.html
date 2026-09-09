@@ -8,10 +8,10 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
 html,body{overflow-x:hidden;background:var(--bg);color:var(--text)}
-body{padding:0 6px 0 6px;min-height:100dvh;margin:0;zoom:1.16}
+body{padding:0 6px 90px 6px;min-height:100dvh;margin:0;}
 .en{font-family:'JetBrains Mono',monospace!important;direction:ltr!important;text-align:center}
 .card{background:var(--card);border:1px solid var(--card-border);border-radius:9px;padding:7px 8px;width:100%}
-#frozenTop{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:30;background:var(--bg);padding:4px 6px 3px 6px;border-bottom:none;box-shadow:none;margin:0}
+#frozenTop{position:sticky;top:0;z-index:30;background:var(--bg);padding:4px 6px 3px 6px;}
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px;margin:4px 0 0 0}
 .stat{border-radius:8px;padding:6px 2px;border:1px solid var(--card-border);text-align:center;background:var(--card)}
 .stat small{font-size:7.5px;font-weight:700;opacity:.8;display:block;color:var(--text-soft);line-height:1}
@@ -20,187 +20,78 @@ body{padding:0 6px 0 6px;min-height:100dvh;margin:0;zoom:1.16}
 .time-box.filled{background:var(--hero)!important;color:#fff!important;border-color:var(--hero)!important}
 .time-box.half{background:var(--bg-soft)!important;border-color:var(--hero)!important;color:var(--hero)!important}
 .note-box{width:92%;border:1px dashed var(--card-border);border-radius:6px;padding:4px 2px;font-size:8px;background:var(--bg);color:var(--text);outline:none;text-align:center}
-.table-wrap{background:var(--card);border:1px solid var(--card-border);border-radius:0 0 9px 9px;overflow:hidden;width:100%;margin:0}
-.table-head{display:grid;grid-template-columns:0.85fr 0.58fr 0.58fr 0.4fr 0.5fr 0.85fr 0.25fr 0.25fr;gap:0;background:var(--bg-soft);font-size:7.5px;font-weight:800;padding:6px 2px;text-align:center;color:var(--text-soft);border-bottom:1px solid var(--card-border);position:sticky;top:0;z-index:2}
+.table-wrap{background:var(--card);border:1px solid var(--card-border);border-radius:9px;overflow:hidden;width:100%;margin:4px 0}
+.table-head{display:grid;grid-template-columns:0.85fr 0.58fr 0.58fr 0.4fr 0.5fr 0.85fr 0.25fr 0.25fr;gap:0;background:var(--bg-soft);font-size:7.5px;font-weight:800;padding:6px 2px;text-align:center;color:var(--text-soft);border-bottom:1px solid var(--card-border);}
 .row-item{display:grid;grid-template-columns:0.85fr 0.58fr 0.58fr 0.4fr 0.5fr 0.85fr 0.25fr 0.25fr;gap:0;align-items:center;padding:4px 1px;border-bottom:1px solid var(--bg-soft);background:var(--card)}
 .row-item.done{border-right:2px solid var(--hero)}
 .clear-btn{border:none;background:#FFF1F2;color:#ef4444;width:18px;height:18px;border-radius:5px;font-size:9px;cursor:pointer;border:1px solid #FECDD3;display:flex;align-items:center;justify-content:center}
-#days{max-height:none!important;overflow:visible!important}
-#mainWrap{max-width:430px;margin:0 auto;width:100%;padding:0 6px}
-#spacer{height:0;transition:none;margin:0;padding:0}
-#spacer.hidden{height:38px}
-#proModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;align-items:center;justify-content:center;padding:14px;backdrop-filter:blur(6px)}
-#proModal.show{display:flex}
-.modal-box{background:var(--card);width:100%;max-width:330px;border-radius:16px;overflow:hidden;border:1px solid var(--card-border)}
 </style></head><body>
 <div id="frozenTop">
 <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px">
-<div style="display:flex;gap:4px;align-items:center"><div style="font-size:9px;font-weight:900">⏱️ الحضور</div><button onclick="toggleTop()" id="toggleBtn" style="background:var(--bg-soft);border:1px solid var(--card-border);padding:2px 6px;border-radius:999px;font-size:7.5px;font-weight:700;color:var(--text)">▲ إخفاء</button></div>
+<div style="display:flex;gap:4px;align-items:center"><div style="font-size:9px;font-weight:900">⏱️ الحضور</div></div>
 <div style="display:flex;gap:2px;align-items:center">
 <div id="syncStatus" class="en" style="font-size:7.5px;background:var(--bg-soft);color:var(--text-soft);padding:2px 6px;border-radius:999px">☁️ متزامن</div>
 <div id="monthLabel" class="en" style="font-size:8.5px;background:var(--hero);color:#fff;padding:2px 6px;border-radius:999px;font-weight:900">9 / 2026</div><button onclick="changeMonth(-1)" style="background:var(--card);border:1px solid var(--card-border);width:21px;height:21px;border-radius:5px;font-weight:900;font-size:11px">‹</button><button onclick="changeMonth(1)" style="background:var(--card);border:1px solid var(--card-border);width:21px;height:21px;border-radius:5px;font-weight:900;font-size:11px">›</button><div id="clock" class="en" style="font-size:7.5px;background:var(--bg-soft);padding:2px 5px;border-radius:999px">00:00:00</div></div>
 </div>
-<div id="topInfo" style="margin:0;padding:0">
 <div class="stats">
 <div class="stat"><small>سعر الساعة</small><b id="outPrice" class="en">0</b></div>
-<div class="stat"><small>الساعة</small><input id="v1" type="tel" class="en" value="1,200" onfocus="handleFocus(this)" onblur="fmtField(this);calcTotals();updateSpacer()" oninput="calcTotals()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
-<div class="stat"><small>كم يوم</small><input id="v2" type="tel" class="en" value="26" onfocus="handleFocus(this)" oninput="calcTotals()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
+<div class="stat"><small>الساعة</small><input id="v1" type="tel" class="en" value="1,200" onfocus="this.select()" onblur="fmtField(this);calcTotals(); saveToDrive()" oninput="calcTotals()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
+<div class="stat"><small>كم يوم</small><input id="v2" type="tel" class="en" value="26" onfocus="this.select()" oninput="calcTotals(); saveToDrive()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
 <div class="stat"><small>عدد الساعات</small><b id="outTotal" class="en">0</b></div>
 <div class="stat"><small>الصافي</small><b id="outSafi" class="en">0</b></div>
-<div class="stat"><small>الديون</small><input id="v4" type="tel" class="en" value="0" onfocus="handleFocus(this)" onblur="fmtField(this);calcTotals()" oninput="calcTotals()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
-<div class="stat"><small>المطلوب</small><input id="v3" type="tel" class="en" value="15,000" onfocus="handleFocus(this)" onblur="fmtField(this);calcTotals()" oninput="calcTotals()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
+<div class="stat"><small>الديون</small><input id="v4" type="tel" class="en" value="0" onfocus="this.select()" onblur="fmtField(this);calcTotals()" oninput="calcTotals(); saveToDrive()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
+<div class="stat"><small>المطلوب</small><input id="v3" type="tel" class="en" value="15,000" onfocus="this.select()" onblur="fmtField(this);calcTotals()" oninput="calcTotals(); saveToDrive()" style="width:100%;border:none;background:transparent;text-align:center;outline:none"></div>
 <div class="stat"><small>المطلوب يومياً</small><b id="outDaily" class="en">0</b></div>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:3px 0 0 0">
-<button onclick="quickPunch('in')" style="border-radius:8px;padding:6px 2px;border:1px solid var(--hero);text-align:center;background:var(--hero);color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.1">
-<small style="font-size:7.5px;font-weight:800">🟢 حضور الآن</small><b class="en" id="inBtnTime" style="font-size:10.2px;font-weight:900">--:--</b>
-</button>
-<button onclick="quickPunch('out')" style="border-radius:8px;padding:6px 2px;border:1px solid #ef4444;text-align:center;background:#FFF1F2;color:#ef4444;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.1">
-<small style="font-size:7.5px;font-weight:800">🔴 انصراف الآن</small><b class="en" id="outBtnTime" style="font-size:10.2px;font-weight:900">--:--</b>
-</button>
 </div>
-<div id="punchStatus" style="background:var(--card);border:1px solid var(--card-border);border-radius:6px;padding:3px 6px;font-size:8px;text-align:center;display:none;font-weight:700;margin-top:2px;line-height:1.2"></div>
-<div id="closedList" style="margin:2px 0 0 0;display:flex;gap:2px;flex-wrap:wrap"></div>
-</div>
-</div>
+<div id="days" class="table-wrap"><div class="table-head"><div>اليوم</div><div>دخول</div><div>خروج</div><div>س</div><div>ج</div><div>ملاحظة</div><div>أ</div><div>✕</div></div><div id="list"></div></div>
 
-<div id="mainWrap">
-<div id="spacer"></div>
-<div class="table-wrap"><div class="table-head"><div>اليوم</div><div>حضور</div><div>انصراف</div><div>ساعات</div><div>الصافي</div><div>ملاحظات</div><div>إجازة</div><div>مسح</div></div><div id="days"></div></div>
-</div>
-
-<div id="proModal" onclick="if(event.target==this)closeModal()"><div class="modal-box"><div style="padding:14px;text-align:center"><div id="modalIcon" style="width:40px;height:40px;background:#FFF1F2;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:19px">🗑️</div><div id="modalTitle" style="font-weight:900;font-size:12px;color:var(--text)">تمسح حضور اليوم ده؟</div><div id="modalDesc" style="font-size:9px;color:var(--text-soft);margin-top:3px">هيتم مسح الحضور والانصراف بس</div></div><div style="display:flex;gap:6px;padding:8px;background:var(--bg-soft);border-top:1px solid var(--card-border)"><button onclick="closeModal()" style="flex:1;background:var(--card);border:1px solid var(--card-border);padding:9px;border-radius:8px;font-weight:800;font-size:9px">إلغاء</button><button id="modalOk" onclick="confirmModal()" style="flex:1;background:#ef4444;color:#fff;border:none;padding:9px;border-radius:8px;font-weight:900;font-size:9px">مسح ✓</button></div></div></div>
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz3TyAm_BWEzlgEcqjqYA6SaBMjoLzN3j51Ewb9vp6UZNL8yJespFDUKQxWA5IOvrvW/exec";
-
-let modalAction=null, modalKey=null;
-function openClearModal(key){ modalAction='clear'; modalKey=key; document.getElementById('proModal').classList.add('show'); }
-function closeModal(){ document.getElementById('proModal').classList.remove('show'); modalAction=null; modalKey=null; }
-function confirmModal(){ if(modalAction==='clear'){ doClearDay(modalKey); } closeModal(); }
-let topHidden=localStorage.getItem('att_top_hidden')==='1';let curDate=new Date();let curY=curDate.getFullYear();let curM=curDate.getMonth();let activeKey=localStorage.getItem('att_active_month');if(activeKey){let p=activeKey.split('-');curY=parseInt(p[0]);curM=parseInt(p[1])-1;}let closed=JSON.parse(localStorage.getItem('att_closed')||'{}');
-
-// نظام الحفظ والمزامنة التلقائية في الخلفية (من غير زرار)
-let syncTimer = null;
-function saveToDrive() {
-  if (WEB_APP_URL.includes("حط_رابط")) return;
-  
-  // تغيير مؤشر الحالة لجاري الحفظ
-  let st = document.getElementById('syncStatus');
-  if(st) { st.textContent = '⏳ جاري الحفظ...'; st.style.color = '#f59e0b'; }
-
-  if(syncTimer) clearTimeout(syncTimer);
-  syncTimer = setTimeout(() => {
-    let allData = {
-      attendance: JSON.parse(localStorage.getItem('att_fixed_final')||'{}'),
-      hols: JSON.parse(localStorage.getItem('att_hols_fixed')||'{}'),
-      notes: JSON.parse(localStorage.getItem('att_notes')||'{}')
-    };
-    
-    fetch(WEB_APP_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fileName: "all_project_data.json", content: allData })
-    }).then(() => {
-      if(st) { st.textContent = '☁️ متزامن'; st.style.color = 'var(--text-soft)'; }
-    }).catch(err => {
-      if(st) { st.textContent = '⚠️ خطأ بالربط'; st.style.color = '#ef4444'; }
-    });
-  }, 1000); // مهلة ثانية واحدة لتجميع التعديلات ورفعها مرة واحدة بذكاء
-}
-
-function toggleTop(){ topHidden=!topHidden; localStorage.setItem('att_top_hidden',topHidden?'1':'0'); applyTop(); }
-function applyTop(){
-  document.getElementById('topInfo').style.display=topHidden?'none':'block';
-  document.getElementById('toggleBtn').innerText=topHidden?'▼ إظهار':'▲ إخفاء';
-  let spacer=document.getElementById('spacer');
-  if(topHidden){ spacer.className='hidden'; }
-  else { spacer.className=''; setTimeout(updateSpacer, 30); }
-}
-function changeMonth(d){curM+=d;if(curM<0){curM=11;curY--;}if(curM>11){curM=0;curY++;}renderAll();}
-function renderClosedList(){let html='';Object.keys(closed).forEach(k=>{html+=`<span style="font-size:7px;background:var(--bg-soft);border:1px solid var(--card-border);padding:2px 6px;border-radius:999px">🔒 ${k} - ${closed[k].money}ج</span>`;});document.getElementById('closedList').innerHTML=html;}
-let data=JSON.parse(localStorage.getItem('att_fixed_final')||'{}');let hols=JSON.parse(localStorage.getItem('att_hols_fixed')||'{}');let notes=JSON.parse(localStorage.getItem('att_notes')||'{}');
-function fmtField(el){ let raw=el.value.replace(/,/g,'').trim(); if(!raw) return; let num=parseFloat(raw); if(!isNaN(num)) el.value=num.toLocaleString('en-US'); }
-function unFmt(el){ el.value=el.value.replace(/,/g,''); }
-function handleFocus(el){ unFmt(el); setTimeout(()=>{ try{ el.select(); el.setSelectionRange(0,9999); }catch(e){} }, 120); }
-function selectAll(el){ el.focus(); setTimeout(()=>{ try{ el.select(); el.setSelectionRange(0,9999); }catch(e){} }, 80); }
-function toEn(s){return String(s).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/,/g,'').replace(/[^0-9.:]/g,'');}
-function parseHour(v){if(!v) return 0;v=toEn(v);if(v.includes(':')){let p=v.split(':');return (parseFloat(p[0])||0)+(parseFloat(p[1])||0)/60;}return parseFloat(v)||0;}
-function calcDiff(a,b){if(!a||!b) return 0;let s=parseHour(a), e=parseHour(b);let d=e-s;if(d<0)d+=24;return d>0?d:0;}
-function updateSpacer(){
-  let top=document.getElementById('frozenTop');
-  let spacer=document.getElementById('spacer');
-  if(!top||!spacer) return;
-  if(topHidden) return;
-  let h=top.offsetHeight;
-  spacer.style.height=h+'px';
-}
+let curY=new Date().getFullYear(), curM=new Date().getMonth();
+let data=JSON.parse(localStorage.getItem('att_fixed_final')||'{}');
+let hols=JSON.parse(localStorage.getItem('att_hols_fixed')||'{}');
+let notes=JSON.parse(localStorage.getItem('att_notes')||'{}');
+function toEn(s){ return (s+'').replace(/[٠-٩]/g,d=> '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)] ).replace(/[^0-9:.,-]/g,''); }
+function fmtField(el){ try{ let v=toEn(el.value).replace(/,/g,''); if(!v) return; let n=parseFloat(v); if(!isNaN(n)) el.value=n.toLocaleString('en-US'); }catch(e){} }
+function selectAll(el){ try{ el.select(); }catch(e){} }
+function calcDiff(a,b){ if(!a||!b) return 0; let parse=t=>{ let parts=(t+'').split(':'); let h=parseFloat(parts[0])||0; let m=parseFloat(parts[1])||0; return h + m/60; }; let diff=parse(b)-parse(a); if(diff<0) diff+=24; return diff; }
+function changeMonth(d){ curM+=d; if(curM>11){curM=0;curY++;} if(curM<0){curM=11;curY--;} renderAll(); }
 function renderAll(){
-  const list=document.getElementById('days');
-  document.getElementById('monthLabel').innerText=`${curM+1} / ${curY}`;
-  const y=curY,m=curM;
-  const dim=new Date(y,m+1,0).getDate();
-  let v1p=parseFloat(toEn(document.getElementById('v1')?.value))||0;
-  let v2p=parseFloat(toEn(document.getElementById('v2')?.value))||1;
-  let price = v2p ? v1p / v2p : 0;
+  document.getElementById('monthLabel').textContent=(curM+1)+' / '+curY;
+  let dim=new Date(curY,curM+1,0).getDate();
+  let price=parseFloat(toEn(document.getElementById('v1').value))||0; let v2=parseFloat(toEn(document.getElementById('v2').value))||1; price=v2?price/v2:0;
   let html='';
   for(let i=1;i<=dim;i++){
-    const key=`${y}-${m+1}-${i}`;
-    const rec=data[key]||{in:'',out:''};
-    const isHol=hols[key];
-    const hours=calcDiff(rec.in,rec.out);
-    const dayAr=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][new Date(y,m,i).getDay()];
-    const noteVal=notes[key]||'';
-    const isDone=rec.in&&rec.out&&!isHol;
-    const inClass=rec.in?(isDone?'filled':'half'):'';
-    const outClass=rec.out?(isDone?'filled':'half'):'';
+    let key=`${curY}-${curM+1}-${i}`;
+    let rec=data[key]||{in:'',out:''};
+    let isHol=hols[key];
+    let hours=calcDiff(rec.in,rec.out);
+    let dayAr=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][new Date(curY,curM,i).getDay()];
+    let noteVal=notes[key]||'';
+    let isDone=rec.in&&rec.out&&!isHol;
+    let inClass=rec.in?(isDone?'filled':'half'):'';
+    let outClass=rec.out?(isDone?'filled':'half'):'';
     let dailyMoney = hours && price ? Math.round(hours*price) : 0;
-    html+=`<div class="row-item ${isDone?'done':''}">
-      <div style="font-size:8px;font-weight:800;white-space:nowrap">${dayAr} <span class="en" style="font-size:6.5px;color:var(--text-soft)">(${i})</span></div>
-      <input id="in-${key}" type="tel" class="time-box en ${inClass}" value="${rec.in}" placeholder="7" ${isHol?'disabled':''} onfocus="selectAll(this)" onclick="selectAll(this)" oninput="saveD('${key}','in',this.value)">
-      <input id="out-${key}" type="tel" class="time-box en ${outClass}" value="${rec.out}" placeholder="19" ${isHol?'disabled':''} onfocus="selectAll(this)" onclick="selectAll(this)" oninput="saveD('${key}','out',this.value)">
-      <div id="h-${key}" class="en" style="font-size:8.2px;font-weight:900;color:${isDone?'var(--hero)':''}">${isHol?'-':hours?hours.toFixed(2):'-'}</div>
-      <div id="s-${key}" class="en" style="font-size:8px;font-weight:900;color:${isDone?'var(--hero)':'var(--text-soft)'}">${isHol?'-':dailyMoney?dailyMoney.toLocaleString('en-US'):'-'}</div>
-      <input id="note-${key}" type="text" class="note-box" placeholder="..." value="${noteVal}" onfocus="selectAll(this)" onclick="selectAll(this)" oninput="saveNote('${key}',this.value)">
-      <button onclick="toggleHol('${key}')" style="border:none;background:${isHol?'var(--hero)':'var(--bg-soft)'};width:18px;height:18px;border-radius:4px;font-size:8px;color:${isHol?'#fff':'var(--text-soft)'};border:1px solid var(--card-border)">${isHol?'✓':'○'}</button>
-      <button class="clear-btn" onclick="openClearModal('${key}')">✕</button>
-    </div>`;
+    html+=`<div class="row-item ${isDone?'done':''}"><div style="font-size:8px;font-weight:800;white-space:nowrap">${dayAr} <span class="en" style="font-size:6.5px;color:var(--text-soft)">(${i})</span></div><input id="in-${key}" type="tel" class="time-box en ${inClass}" value="${rec.in}" placeholder="7" ${isHol?'disabled':''} onfocus="selectAll(this)" oninput="saveD('${key}','in',this.value)"><input id="out-${key}" type="tel" class="time-box en ${outClass}" value="${rec.out}" placeholder="19" ${isHol?'disabled':''} onfocus="selectAll(this)" oninput="saveD('${key}','out',this.value)"><div id="h-${key}" class="en" style="font-size:8.2px;font-weight:900">${isHol?'-':hours?hours.toFixed(2):'-'}</div><div id="s-${key}" class="en" style="font-size:8px;font-weight:900">${isHol?'-':dailyMoney?dailyMoney.toLocaleString('en-US'):'-'}</div><input id="note-${key}" type="text" class="note-box" value="${noteVal}" onfocus="selectAll(this)" oninput="saveNote('${key}',this.value)"><button onclick="toggleHol('${key}')" style="border:none;background:${isHol?'var(--hero)':'var(--bg-soft)'};width:18px;height:18px;border-radius:4px;font-size:8px;color:${isHol?'#fff':'var(--text-soft)'};border:1px solid var(--card-border)">${isHol?'✓':'○'}</button><button class="clear-btn" onclick="clearDay('${key}')">✕</button></div>`;
   }
-  list.innerHTML=html;
+  document.getElementById('list').innerHTML=html;
   calcTotals();
-  renderClosedList();
-  setTimeout(updateSpacer, 20);
 }
-function doClearDay(k){ data[k]={in:'',out:''}; localStorage.setItem('att_fixed_final',JSON.stringify(data)); saveToDrive(); renderAll(); }
+function clearDay(k){ data[k]={in:'',out:''}; localStorage.setItem('att_fixed_final',JSON.stringify(data)); if(window.saveToDrive) saveToDrive(); renderAll(); }
 function saveD(k,t,v){
   let clean=toEn(v);
   if(!data[k]) data[k]={in:'',out:''};
   data[k][t]=clean;
   localStorage.setItem('att_fixed_final',JSON.stringify(data));
-  saveToDrive();
-  const h=calcDiff(data[k].in,data[k].out);
-  const hEl=document.getElementById('h-'+k);
-  if(hEl){ hEl.innerText=h?h.toFixed(2):'-'; hEl.style.color=h?'var(--hero)':''; }
-  const sEl=document.getElementById('s-'+k);
-  if(sEl){
-    let v1p=parseFloat(toEn(document.getElementById('v1')?.value))||0;
-    let v2p=parseFloat(toEn(document.getElementById('v2')?.value))||1;
-    let price = v2p ? v1p / v2p : 0;
-    let dm = h && price ? Math.round(h*price) : 0;
-    sEl.innerText = dm ? dm.toLocaleString('en-US') : '-';
-    sEl.style.color = dm ? 'var(--hero)' : '';
-  }
-  const inEl=document.getElementById('in-'+k);
-  const outEl=document.getElementById('out-'+k);
-  const row=inEl?.closest('.row-item');
-  const isDone=data[k].in&&data[k].out;
-  if(row) row.classList.toggle('done',!!isDone);
-  if(inEl){ inEl.classList.remove('filled','half'); if(data[k].in) inEl.classList.add(isDone?'filled':'half'); }
-  if(outEl){ outEl.classList.remove('filled','half'); if(data[k].out) outEl.classList.add(isDone?'filled':'half'); }
+  if(window.saveToDrive) saveToDrive(); // ده دلوقتي debounced 700ms فمش هيعلق
   calcTotals();
+  // update row live without full render
+  let h=calcDiff(data[k].in,data[k].out);
+  let hEl=document.getElementById('h-'+k);
+  if(hEl) hEl.innerText=h?h.toFixed(2):'-';
 }
-function saveNote(k,v){notes[k]=v;localStorage.setItem('att_notes',JSON.stringify(notes)); saveToDrive();}
-function toggleHol(k){if(hols[k]) delete hols[k]; else hols[k]=true;localStorage.setItem('att_hols_fixed',JSON.stringify(hols)); saveToDrive(); renderAll();}
+function saveNote(k,v){notes[k]=v;localStorage.setItem('att_notes',JSON.stringify(notes)); if(window.saveToDrive) saveToDrive();}
+function toggleHol(k){if(hols[k]) delete hols[k]; else hols[k]=true;localStorage.setItem('att_hols_fixed',JSON.stringify(hols)); if(window.saveToDrive) saveToDrive(); renderAll();}
 function calcTotals(){
   let v1=parseFloat(toEn(document.getElementById('v1').value))||0;
   let v2=parseFloat(toEn(document.getElementById('v2').value))||1;
@@ -218,35 +109,11 @@ function calcTotals(){
   document.getElementById('outSafi').innerText=Math.round(safi).toLocaleString('en-US');
   document.getElementById('outDaily').innerText=price&&v2?(v3/price/v2).toFixed(2):'0.00';
 }
-function quickPunch(type){
-  let now=new Date();
-  let realY=now.getFullYear(); let realM=now.getMonth();
-  if(curY!==realY || curM!==realM){ curY=realY; curM=realM; renderAll(); setTimeout(()=>{ doQuickPunch(type, now); }, 150); } else { doQuickPunch(type, now); }
-}
-function doQuickPunch(type, now){
-  let y=curY, m=curM, d=now.getDate();
-  let key=`${y}-${m+1}-${d}`;
-  let h=now.getHours(); let mm=now.getMinutes();
-  let simpleTime = mm===0 ? `${h}` : `${h}:${String(mm).padStart(2,'0')}`;
-  let timeStr = `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
-  if(!data[key]) data[key]={in:'',out:''};
-  if(type==='in') data[key].in=simpleTime; else data[key].out=simpleTime;
-  localStorage.setItem('att_fixed_final', JSON.stringify(data));
-  saveToDrive();
-  renderAll();
-  setTimeout(()=>{
-    let el=document.getElementById(type==='in'?`in-${key}`:`out-${key}`);
-    if(el){ let row=el.closest('.row-item'); if(row) row.scrollIntoView({behavior:'smooth', block:'center'}); }
-    let status=document.getElementById('punchStatus');
-    if(status){ status.style.display='block'; status.innerHTML=`✅ ${type==='in'?'حضور':'انصراف'} ${d}/${m+1} الساعة ${timeStr}`; status.style.background=type==='in'?'#f0fdf4':'#fef2f2'; status.style.borderColor=type==='in'?'#bbf7d0':'#fecaca'; status.style.color=type==='in'?'#16A34A':'#ef4444'; setTimeout(()=>{status.style.display='none'; updateSpacer();},2000); }
-  }, 150);
-}
-function updatePunchBtnTimes(){
-  let now=new Date(); let t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  let a=document.getElementById('inBtnTime'); let b=document.getElementById('outBtnTime'); if(a) a.textContent=t; if(b) b.textContent=t;
-}
-setInterval(updatePunchBtnTimes, 15000); setTimeout(updatePunchBtnTimes, 200);
+window.renderAll=renderAll;
+window.initApp=function(){ data=JSON.parse(localStorage.getItem('att_fixed_final')||'{}'); hols=JSON.parse(localStorage.getItem('att_hols_fixed')||'{}'); notes=JSON.parse(localStorage.getItem('att_notes')||'{}'); renderAll(); };
 setInterval(()=>{const el=document.getElementById('clock');if(el) el.innerText=new Date().toLocaleTimeString('en-GB',{hour12:false});},1000);
-applyTop();renderAll(); setTimeout(updateSpacer, 80);
-window.addEventListener('resize', updateSpacer);
-</script></body></html>
+renderAll();
+</script>
+<script src="drive.js"></script>
+<script src="drive-sync.js"></script>
+</body></html>
