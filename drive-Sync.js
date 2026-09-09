@@ -1,1 +1,0 @@
-window.syncToABOmar=function(){if(window.saveToDrive)window.saveToDrive();}; window.syncToABOmarNow=function(){if(window.saveToDriveNow)window.saveToDriveNow();};
