@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>اختبار الاتصال بجوجل درايف</title>
+<style>
+  body { font-family: Tahoma, sans-serif; padding: 20px; background: #F0FDFA; color: #134E4A; }
+  button { padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; margin-left: 10px; }
+  .btn-get { background: #0F766E; color: #fff; }
+  .btn-post { background: #14B8A6; color: #fff; }
+  pre { background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #5EEAD4; margin-top: 20px; direction: ltr; text-align: left; max-height: 300px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+  <h2>🛠️ لوحة اختبار المزامنة مع الدرايف</h2>
+  <p>اضغط على الأزرار للتأكد من أن الـ Web App شغال وبيستقبل ويبعت تماماً:</p>
+  
+  <button class="btn-get" onclick="testPull()">📥 اختبار السحب (GET)</button>
+  <button class="btn-post" onclick="testPush()">📤 اختبار الرفع (POST)</button>
+
+  <pre id="output">⏳ في انتظار الاختبار...</pre>
+
+<script>
+  // الرابط الجديد بتاعك
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxCcyo6gs-bG2vfPuL4T4O4KOfV3nUVE9dhMrS1dHCFskIsz6KHOEod02Y3eDF_wvXQ/exec";
+
+  function log(msg) {
+    document.getElementById('output').innerText += "\n" + msg;
+  }
+
+  function testPull() {
+    document.getElementById('output').innerText = "⏳ جاري اختبار السحب من الدرايف...";
+    fetch(WEB_APP_URL)
+      .then(res => res.json())
+      .then(data => {
+        log("✅ نجح السحب بنجاح! بيانات الدرايف:");
+        log(JSON.stringify(data, null, 2));
+      })
+      .catch(err => {
+        log("❌ فشل السحب: " + err);
+      });
+  }
+
+  function testPush() {
+    document.getElementById('output').innerText = "⏳ جاري رفع بيانات تجريبية للدرايف...";
+    fetch(WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        testMessage: "رسالة تجريبية من عمر", 
+        time: new Date().toLocaleTimeString() 
+      })
+    })
+    .then(() => {
+      log("✅ تم إرسال طلب الرفع بنجاح! (افتح ملف Omar Backup.json في الدرايف وشوف هل الرسالة سمعت ولا لأ)");
+    })
+    .catch(err => {
+      log("❌ فشل الرفع: " + err);
+    });
+  }
+</script>
+
+</body>
+</html>
