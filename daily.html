@@ -2,19 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>اليومية - متصلح</title>
+<title>اليومية</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#f8fafc; --bg-soft:#f1f5f9; --card:#ffffff;
-  --card-border:#e2e8f0; --text:#0f172a; --text-soft:#94a3b8;
-  --hero:#16a34a;
-}
-@font-face{font-family:"Optimistic";font-style:normal;font-weight:400 600;font-display:swap;src:url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2")}
-:where(html){font-family:"Optimistic",system-ui,sans-serif}
+:root{ --bg:#F0FDFA; --bg-soft:#CCFBF1; --card:#FFFFFF; --card-border:#5EEAD4; --text:#134E4A; --text-soft:#0D9488; --hero:#0F766E; --accent:#14B8A6; }
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
 html,body{overflow-x:hidden;max-width:100vw;background:var(--bg);color:var(--text);transition:.3s}
-body{padding-bottom:94px;max-width:430px;margin:0 auto!important;border-left:1px solid var(--card-border);border-right:1px solid var(--card-border); min-height:100dvh;}
+body{padding-bottom:94px}
 .app{max-width:780px;margin:0 auto;padding:8px}
 .top{position:sticky;top:0;z-index:20;background:var(--card);border:1.5px solid var(--card-border);border-radius:13px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
 .main-tabs{display:flex;gap:4px;background:var(--card);padding:5px;border-radius:12px;border:1.5px solid var(--card-border);margin:8px 0;overflow:auto;scrollbar-width:none}
@@ -62,14 +56,10 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
 .total-header b{font-size:11px!important}
 .add-row-btn{background:var(--card)!important;color:var(--hero)!important;padding:6px 12px!important;border-radius:8px!important;font-size:9px!important;font-weight:900!important;border:none!important;cursor:pointer}
 .tsec.total-sec{background:var(--card)!important;border:1.5px solid var(--card-border)!important;border-radius:12px!important;overflow:hidden!important}
-.tsec.total-sec th{background:var(--bg-soft)!important;color:var(--text-soft)!important}
-.tsec.total-sec td{background:var(--card)!important;color:var(--text)!important}
-.tsec.total-sec td:first-child{background:var(--bg-soft)!important;font-weight:900!important;text-align:right!important;padding-right:8px!important}
-.tsec.total-sec td:last-child{background:var(--bg-soft)!important;color:var(--hero)!important;font-weight:900!important}
 .fab{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:51px;height:51px;border-radius:50%;background:var(--hero);color:#fff;border:none;font-size:27px;z-index:50;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,.2)}
 .modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100;backdrop-filter:blur(6px);align-items:flex-start;justify-content:center;padding:8px 12px 12px 12px;overflow-y:auto}
 .modal.open{display:flex}
-.card{background:var(--card);width:100%;max-width:420px;margin:10vh auto auto auto;border-radius:16px;padding:10px 10px 14px 10px;max-height:72vh;max-height:72dvh;overflow-y:auto;box-shadow:0 20px 50px rgba(0,0,0,.25);transform:translateY(0);transition:transform .25s ease}
+.card{background:var(--card);width:100%;max-width:420px;margin:10vh auto auto auto;border-radius:16px;padding:10px 10px 14px 10px;max-height:72vh;max-height:72dvh;overflow-y:auto;box-shadow:0 20px 50px rgba(0,0,0,.25)}
 .card-actions{position:sticky;bottom:0;background:var(--card);padding-top:10px;margin-top:10px;border-top:1.5px solid var(--card-border);display:flex;gap:6px;z-index:5}
 .card-top-tabs{display:flex;gap:3px;background:var(--bg-soft);padding:4px;border-radius:10px;margin-bottom:7px;overflow-x:auto}
 .card-ttab{flex:1;white-space:nowrap;border:none;padding:8px 5px;border-radius:8px;font-weight:900;font-size:9.3px;cursor:pointer;background:transparent;color:var(--text-soft);min-width:50px}
@@ -78,7 +68,8 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
 .group label{font-size:7.5px;font-weight:800;color:var(--text-soft);white-space:nowrap;min-width:28px}
 .group input,.group select{flex:1;padding:7px 6px;border:1px solid var(--card-border);border-radius:7px;font-weight:700;font-size:11px;background:var(--card);width:100%;color:var(--text)}
 .group input[type="number"]{font-size:15px;font-weight:900;text-align:center}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%}
+.row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;margin:5px 0}
+.row-3 .group{margin:0!important}
 .qbtn{flex:0 0 auto;min-width:36px;padding:5px 7px;border:1px solid var(--card-border);border-radius:13px;background:var(--card);font-size:8px;font-weight:800;cursor:pointer;color:var(--text)}
 .qbtn.active{background:var(--hero);color:#fff;border-color:var(--hero)}
 .custom-dialog{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:200;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(8px)}
@@ -86,7 +77,6 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
 .dialog-box{background:var(--card);border-radius:16px;padding:16px;width:100%;max-width:300px;border:1px solid var(--card-border);box-shadow:0 10px 30px rgba(0,0,0,.2)}
 .dialog-box h4{font-size:13px;font-weight:900;margin-bottom:10px;color:var(--text)}
 .dialog-box input{width:100%;padding:10px 12px;border:1.5px solid var(--card-border);border-radius:10px;font-weight:800;font-size:13px;margin-bottom:8px;background:var(--bg-soft);color:var(--text)}
-.dialog-box input:focus{border-color:var(--hero);outline:none}
 .dialog-actions{display:flex;gap:8px;margin-top:12px}
 .dialog-actions button{flex:1;padding:10px;border:none;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer}
 .btn-cancel{background:var(--bg-soft);color:var(--text-soft);border:1px solid var(--card-border)}
@@ -102,18 +92,8 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
 .toast{display:flex;gap:8px;align-items:center;background:var(--card);border:1.5px solid var(--card-border);border-radius:12px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.2);min-width:240px;max-width:340px;pointer-events:auto;animation:toastIn .3s}
 .toast.ok{border-color:#16a34a;background:#f0fdf4}.toast.err{border-color:#ef4444;background:#fef2f2}
 @keyframes toastIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;margin:5px 0}
-.row-3 .group{margin:0!important}
-.row-3 .group label{font-size:7px!important}
-.group.wide{grid-column: span 3}
-#addModal.lower-card .card{margin:24vh auto 0 auto!important;margin-top:24vh!important}
-#addModal.expense-card .card{margin:20vh auto 0 auto!important;margin-top:20vh!important}
-.modal{align-items:flex-start!important;padding-top:2vh!important;padding-bottom:120px!important;overflow-y:auto!important}
-.modal .card{max-height:85dvh!important;overflow-y:auto!important;margin-bottom:24px!important}
+html,body{max-width:430px;margin:0 auto!important;background:var(--bg);} body{border-left:1px solid var(--card-border);border-right:1px solid var(--card-border); min-height:100dvh;}
 </style>
-<!-- حافظت على ترتيب ملفاتك الاصلي -->
-<script src="themes.js"></script>
-<script src="drive-sync.js"></script>
 </head>
 <body>
 <div id="toastBox"></div>
@@ -148,7 +128,6 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
 <div id="p-total" style="display:none"><div class="month-nav"><button onclick="shiftMonth(-1)">‹</button><div class="month-label"><span id="ml-total">—</span><small id="ml-total-sub"></small></div><button onclick="shiftMonth(1)">›</button></div><div class="stats" id="stats-total"></div><div class="fbar"><input id="f-total-q" placeholder="فلتر" oninput="renderTotal()" style="flex:1;min-width:150px;width:100%"></div><div id="t-total"></div></div>
 </div>
 <button class="fab" onclick="openAdd()">+</button>
-
 <div class="modal" id="addModal" onclick="if(event.target==this)closeAdd()"><div class="card">
 <div class="card-top-tabs">
 <button class="card-ttab active" id="ct-expense" onclick="switchCardTab('expense')">مصروف</button>
@@ -198,11 +177,6 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
     <div class="group"><label>تاريخ</label><input id="a-date-ama" type="date"></div>
     <div class="group"><label>ملاحظة</label><input id="a-note-ama" placeholder="..."></div>
   </div>
-  <div class="row-3">
-    <div class="group"><label>وسائط 📎</label><input type="file" id="a-attach-ama" accept="image/*,video/*" style="font-size:8px;padding:4px"></div>
-    <div class="group" style="opacity:0;pointer-events:none"><label>ـ</label><input disabled></div>
-    <div class="group" style="opacity:0;pointer-events:none"><label>ـ</label><input disabled></div>
-  </div>
 </div>
 <div class="card-actions">
 <button onclick="closeAdd()" style="flex:1;padding:8px;background:var(--bg-soft);border:1px solid var(--card-border);border-radius:8px;font-weight:800;font-size:9.3px;color:var(--text)">إلغاء</button>
@@ -210,11 +184,9 @@ td{padding:7px 3px;border-bottom:1px solid var(--bg-soft);text-align:center;font
 <button onclick="saveTx()" style="flex:1;padding:8px;background:var(--hero);color:#fff;border:none;border-radius:8px;font-weight:900;font-size:9.3px">حفظ</button>
 </div>
 </div></div>
-
 <div class="custom-dialog" id="fixedModal"><div class="dialog-box"><h4>📌 إضافة مصروف ثابت</h4><input id="fixedNameInput" placeholder="اسم البند (الإيجار)" type="text"><input id="fixedAmountInput" placeholder="القيمة (5000)" type="text" inputmode="numeric"><div class="dialog-actions"><button class="btn-cancel" onclick="closeFixedModal()">إلغاء</button><button class="btn-confirm" onclick="confirmFixedModal()">إضافة</button></div></div></div>
 <div class="custom-dialog" id="customPrompt"><div class="dialog-box" id="dialogInner"><h4 id="promptTitle"></h4><input id="promptInput" type="text"><div class="dialog-actions"><button class="btn-cancel" onclick="closePrompt()">إلغاء</button><button class="btn-confirm" id="promptConfirmBtn" onclick="confirmPrompt()">حسناً</button></div></div></div>
 <div class="band-menu" id="bandMenu" onclick="if(event.target==this)closeBandMenu()"><div class="band-menu-box"><div style="width:27px;height:3px;background:var(--card-border);border-radius:20px;margin:0 auto 7px auto"></div><h4 id="bandMenuTitle" style="font-weight:900;font-size:10.2px;margin-bottom:5px;color:var(--text)"></h4><button class="band-menu-item primary" onclick="handleBandAction('edit')">تعديل</button><button class="band-menu-item danger" onclick="handleBandAction('delete')">مسح</button><button class="band-menu-item" onclick="closeBandMenu()" style="background:var(--bg-soft);justify-content:center">إلغاء</button></div></div>
-
 <script>
 function safeParse(k,f){try{let v=localStorage.getItem(k);if(!v||v==='undefined'||v==='null')return f;let p=JSON.parse(v);return p==null?f:p;}catch(e){try{localStorage.removeItem(k);}catch(e2){}return f;}}
 function toast(m,t='ok'){let b=document.getElementById('toastBox');if(!b){b=document.createElement('div');b.id='toastBox';document.body.appendChild(b);}let el=document.createElement('div');el.className='toast '+(t==='ok'?'ok':'err');el.innerHTML=`<span>${t==='ok'?'✅':'⚠'}</span><span style="font-size:10px;font-weight:800;flex:1">${m}</span><button onclick="this.parentElement.remove()" style="background:transparent;border:none">✕</button>`;b.appendChild(el);setTimeout(()=>{try{el.remove();}catch(e){}},3000);}
@@ -229,8 +201,7 @@ let curYM = new Date().toISOString().slice(0,7);
 let fixedTemplates=safeParse('omar_fixed_templates', [{"id":"1","name":"الإيجار","def":5000},{"id":"2","name":"الكهرباء","def":400},{"id":"3","name":"مياه","def":200},{"id":"4","name":"غاز","def":150},{"id":"5","name":"إنترنت","def":300}]);
 let fixedByMonth=safeParse('omar_fixed_by_month', {});
 let fixedOpen=true;
-
-function persistFixed(){localStorage.setItem('omar_fixed_templates',JSON.stringify(fixedTemplates));localStorage.setItem('omar_fixed_by_month',JSON.stringify(fixedByMonth));try{if(window.syncToABOmar)syncToABOmar()}catch(e){}}
+function persistFixed(){localStorage.setItem('omar_fixed_templates',JSON.stringify(fixedTemplates));localStorage.setItem('omar_fixed_by_month',JSON.stringify(fixedByMonth));doSync();}
 function getFixedForMonth(ym){if(!fixedByMonth[ym]){let keys=Object.keys(fixedByMonth).sort();if(keys.length){fixedByMonth[ym]=JSON.parse(JSON.stringify(fixedByMonth[keys[keys.length-1]]))}else{fixedByMonth[ym]=fixedTemplates.map(t=>({id:t.id,name:t.name,amount:t.def}))}persistFixed()}return fixedByMonth[ym]}
 function toggleFixedBox(){fixedOpen=!fixedOpen;document.getElementById('fixedBody').style.display=fixedOpen?'flex':'none';document.getElementById('fixedArrow').textContent=fixedOpen?'▼':'◀'}
 function renderFixedSection(){
@@ -238,17 +209,12 @@ function renderFixedSection(){
   document.getElementById('fixedTotalBadge').textContent=list.reduce((a,b)=>a+(Number(b.amount)||0),0).toLocaleString()+' ج';
   let html='';
   for(let i=0;i<list.length;i+=2){
-    let f1=list[i];
-    let f2=list[i+1];
+    let f1=list[i]; let f2=list[i+1];
     html+=`<div class="fixed-row-2">
-      <input value="${f1.name.replace(/"/g,'&quot;')}" onfocus="this.select()" onchange="editFixedName('${f1.id}',this.value)" placeholder="البند">
+      <input value="${(f1.name||'').replace(/"/g,'&quot;')}" onfocus="this.select()" onchange="editFixedName('${f1.id}',this.value)" placeholder="البند">
       <input type="text" inputmode="numeric" value="${f1.amount}" onfocus="this.select()" oninput="editFixedAmount('${f1.id}',this.value)">
       <button class="fixed-del-sm" onclick="deleteFixed('${f1.id}')">✕</button>
-      ${f2?`
-      <input value="${f2.name.replace(/"/g,'&quot;')}" onfocus="this.select()" onchange="editFixedName('${f2.id}',this.value)" placeholder="البند">
-      <input type="text" inputmode="numeric" value="${f2.amount}" onfocus="this.select()" oninput="editFixedAmount('${f2.id}',this.value)">
-      <button class="fixed-del-sm" onclick="deleteFixed('${f2.id}')">✕</button>
-      `:`<div></div><div></div><div></div>`}
+      ${f2?`<input value="${(f2.name||'').replace(/"/g,'&quot;')}" onfocus="this.select()" onchange="editFixedName('${f2.id}',this.value)" placeholder="البند"><input type="text" inputmode="numeric" value="${f2.amount}" onfocus="this.select()" oninput="editFixedAmount('${f2.id}',this.value)"><button class="fixed-del-sm" onclick="deleteFixed('${f2.id}')">✕</button>`:`<div></div><div></div><div></div>`}
     </div>`;
   }
   html+=`<button onclick="openFixedModal()" style="width:100%;margin-top:6px;padding:8px;background:var(--hero);color:#fff;border:none;border-radius:8px;font-weight:900;font-size:10px">+ إضافة بند ثابت</button>`;
@@ -257,21 +223,18 @@ function renderFixedSection(){
 }
 function editFixedName(id,val){let it=getFixedForMonth(curYM).find(x=>x.id===id);if(it)it.name=val;let tmpl=fixedTemplates.find(x=>x.id===id);if(tmpl)tmpl.name=val;persistFixed();}
 function editFixedAmount(id,val){let num=Number(val.replace(/[^0-9]/g,''))||0;let it=getFixedForMonth(curYM).find(x=>x.id===id);if(it)it.amount=num;persistFixed();document.getElementById('fixedTotalBadge').textContent=getFixedForMonth(curYM).reduce((a,b)=>a+(Number(b.amount)||0),0).toLocaleString()+' ج';renderStats(curTab);}
-function openFixedModal(){document.getElementById('fixedNameInput').value='';document.getElementById('fixedAmountInput').value='';document.getElementById('fixedModal').classList.add('open');setTimeout(()=>document.getElementById('fixedNameInput').focus(),100);}
+function openFixedModal(){document.getElementById('fixedNameInput').value='';document.getElementById('fixedAmountInput').value='';document.getElementById('fixedModal').classList.add('open');}
 function closeFixedModal(){document.getElementById('fixedModal').classList.remove('open');}
 function confirmFixedModal(){let name=document.getElementById('fixedNameInput').value.trim();let amount=Number(document.getElementById('fixedAmountInput').value.replace(/[^0-9]/g,''))||0;if(!name){toast('اكتب اسم البند','err');return;}let id=Date.now().toString();fixedTemplates.push({id,name,def:amount});getFixedForMonth(curYM).push({id,name,amount});persistFixed();closeFixedModal();renderFixedSection();renderStats(curTab);}
 function deleteFixed(id){if(!confirm('تمسح البند؟'))return;fixedTemplates=fixedTemplates.filter(x=>x.id!==id);Object.keys(fixedByMonth).forEach(ym=>{fixedByMonth[ym]=fixedByMonth[ym].filter(x=>x.id!==id)});persistFixed();renderFixedSection();renderStats(curTab);}
-
-function persist(){
-  localStorage.setItem('omar_tx_v3',JSON.stringify(transactions));
-  localStorage.setItem('omar_master_bands',JSON.stringify(masterBands));
-  localStorage.setItem('omar_wallets_v3',JSON.stringify(wallets));
-  localStorage.setItem('omar_include_def',JSON.stringify(includeDeferredInBalance));
-  // المزامنة - سيبتها زي ما هي عشان مترجعش تبوظ
-  try{if(window.syncToABOmar)window.syncToABOmar()}catch(e){}
-  try{if(window.parent&&window.parent.syncToABOmar)window.parent.syncToABOmar()}catch(e){}
-  try{window.dispatchEvent(new Event('omar_data_updated'));if(window.parent)window.parent.postMessage({type:'omar_data_updated'},'*')}catch(e){}
+function doSync(){
+  try{ localStorage.setItem('omar_tx_v3',JSON.stringify(transactions)); localStorage.setItem('omar_master_bands',JSON.stringify(masterBands)); localStorage.setItem('omar_wallets_v3',JSON.stringify(wallets)); localStorage.setItem('omar_include_def',JSON.stringify(includeDeferredInBalance)); }catch(e){}
+  try{ if(window.syncToABOmar) window.syncToABOmar(); }catch(e){}
+  try{ if(window.saveToDrive) window.saveToDrive(); }catch(e){}
+  try{ if(window.parent && window.parent.syncToABOmar) window.parent.syncToABOmar(); }catch(e){}
+  try{ window.dispatchEvent(new Event('omar_data_updated')); if(window.parent) window.parent.postMessage({type:'omar_data_updated'},'*'); }catch(e){}
 }
+function persist(){ doSync(); }
 function ensureMaster(){if(masterBands.length===0){masterBands=[{id:1,name:'الإيجار',section:'expense'},{id:2,name:'الكهرباء',section:'expense'},{id:3,name:'مبيعات',section:'income'},{id:4,name:'أحمد',section:'debt_due'},{id:5,name:'سامي',section:'amanat'}];}persist()}
 function getBands(sec){return masterBands.filter(b=>b.section===sec).map(b=>b.name)}
 function getMonthRange(ym){const[y,m]=ym.split('-').map(Number);const first=`${ym}-01`;const lastDay=new Date(y,m,0).getDate();const last=`${ym}-${String(lastDay).padStart(2,'0')}`;return{first,last,y,m}}
@@ -305,7 +268,6 @@ let expenseMonth=monthList.filter(t=>t.type==='expense').reduce((s,x)=>s+Number(
 let fixedSum=getFixedForMonth(curYM).reduce((a,b)=>a+(Number(b.amount)||0),0);
 expenseMonth+=fixedSum;
 let dueO=0,dueL=0;monthList.filter(t=>t.type==='debt'&&(t.subType==='debt_due'||t.status==='due')).forEach(t=>{if(t.direction==='عليا')dueO+=Number(t.amount);else dueL+=Number(t.amount)});
-const debtDueNet=dueL-dueO;
 let defOAll=0,defLAll=0;allMonth.filter(t=>t.type==='debt'&&(t.subType==='debt_def'||t.status==='def')).forEach(t=>{if(t.direction==='عليا')defOAll+=Number(t.amount);else defLAll+=Number(t.amount)});
 const debtDefNetAll=defLAll-defOAll;
 const isActive=includeDeferredInBalance;
@@ -324,10 +286,8 @@ allMonth.filter(t=>t.type==='debt').forEach(t=>{
 if(t.subType==='debt_due'||t.status==='due'){if(!t.excludeFromBalance){if(t.direction==='عليا')o+=Number(t.amount);else l+=Number(t.amount)}}
 else{if(t.direction==='عليا')od+=Number(t.amount);else ld+=Number(t.amount)}
 });
-const safiDue = l - o;
-const safiDef = ld - od;
-el.innerHTML=`
-<div style="display:flex;gap:4px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:none">
+const safiDue = l - o; const safiDef = ld - od;
+el.innerHTML=`<div style="display:flex;gap:4px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:none">
   <div class="stat neg" style="min-width:88px"><small>عليا مستحق</small><b>${o.toLocaleString()}</b></div>
   <div class="stat pos" style="min-width:88px"><small>ليا مستحق</small><b>${l.toLocaleString()}</b></div>
   <div class="stat neu" style="min-width:88px;border-color:var(--hero)"><small>صافي المستحق</small><b>${safiDue.toLocaleString()}</b></div>
@@ -373,14 +333,7 @@ h+=`<div class="tsec"><div class="thead"><b style="font-size:10.2px">${person}</
 }
 document.getElementById('debt-due').innerHTML=build(due);document.getElementById('debt-def').innerHTML=build(def);
 }
-function toggleDeferredInclude(){
-  includeDeferredInBalance=!includeDeferredInBalance;
-  localStorage.setItem('omar_include_def', JSON.stringify(includeDeferredInBalance));
-  localStorage.setItem('omar_def_inc', includeDeferredInBalance ? '1' : '0');
-  renderStats(curTab);
-  renderTotal();
-  refreshCurrent();
-}
+function toggleDeferredInclude(){ includeDeferredInBalance=!includeDeferredInBalance; localStorage.setItem('omar_include_def', JSON.stringify(includeDeferredInBalance)); localStorage.setItem('omar_def_inc', includeDeferredInBalance ? '1' : '0'); renderStats(curTab); renderTotal(); refreshCurrent(); }
 function renderTotal(){
   try{ renderStats('total'); }catch(e){}
   const q=(document.getElementById('f-total-q')?.value||'').trim();
@@ -411,8 +364,7 @@ function renderTotal(){
         const total=perMonth.reduce((a,c)=>a+c,0);
         html+=`<tr><td style="font-weight:900">${wName}</td>${perMonth.map(v=>`<td>${v?v.toLocaleString():'-'}</td>`).join('')}<td style="font-weight:900;color:var(--hero)">${total.toLocaleString()}</td></tr>`;
       });
-      html+=`</tbody></table></div></div>`;
-      return;
+      html+=`</tbody></table></div></div>`; return;
     }
     let bands=masterBands.filter(b=>b.section===sec.key);
     const existNames=new Set(bands.map(b=>b.name));
@@ -420,8 +372,7 @@ function renderTotal(){
       const nm=(t.person||t.item||'').trim();
       if(nm && !existNames.has(nm)){
         masterBands.push({id:Date.now()+Math.random()*1000,name:nm,section:sec.key});
-        existNames.add(nm);
-        bands.push({name:nm,section:sec.key});
+        existNames.add(nm); bands.push({name:nm,section:sec.key});
       }
     });
     if(q) bands=bands.filter(b=>b.name.includes(q));
@@ -430,23 +381,17 @@ function renderTotal(){
     const monthLabel=`${curYM.slice(5,7)}-${curYM.slice(0,4)}`;
     const monthSum=monthFiltered.reduce((a,b)=>a+(Number(b.amount)||0),0);
     html+=`<div class="total-header"><button class="add-row-btn" onclick="addNewRow('${sec.key}')">+ بند</button><span style="font-size:12px;font-weight:900">${monthSum.toLocaleString()}</span><b>${sec.title} (${monthLabel})</b></div>`;
-    if(!bands.length){
-      html+=`<div class="tsec total-sec"><div class="twrap"><table><thead><tr><th style="min-width:80px">بند</th>${months.map(m=>`<th>${m}</th>`).join('')}<th>إجمالي</th></tr></thead><tbody><tr><td colspan="${months.length+2}" style="padding:10px;color:var(--text-soft)">فاضي - دوس + بند</td></tr></tbody></table></div></div>`;
-      return;
-    }
+    if(!bands.length){ html+=`<div class="tsec total-sec"><div class="twrap"><table><thead><tr><th style="min-width:80px">بند</th>${months.map(m=>`<th>${m}</th>`).join('')}<th>إجمالي</th></tr></thead><tbody><tr><td colspan="${months.length+2}" style="padding:10px;color:var(--text-soft)">فاضي - دوس + بند</td></tr></tbody></table></div></div>`; return; }
     html+=`<div class="tsec total-sec"><div class="twrap"><table><thead><tr><th style="min-width:80px">بند</th>${months.map(m=>`<th>${m}</th>`).join('')}<th>إجمالي</th></tr></thead><tbody>`;
     bands.forEach(b=>{
-      const band=b.name;
-      const items=list.filter(t=> (t.item===band || t.person===band) );
-      const perMonth=Array(12).fill(0);
-      items.forEach(t=>{const d=new Date(t.date); if(!isNaN(d)) perMonth[d.getMonth()]+=(Number(t.amount)||0);});
+      const band=b.name; const items=list.filter(t=> (t.item===band || t.person===band) );
+      const perMonth=Array(12).fill(0); items.forEach(t=>{const d=new Date(t.date); if(!isNaN(d)) perMonth[d.getMonth()]+=(Number(t.amount)||0);});
       const total=perMonth.reduce((a,c)=>a+c,0);
       html+=`<tr><td onclick="openBandMenu('${band.replace(/'/g,"\\'")}','${sec.key}')" style="cursor:pointer;font-weight:900">${band}</td>${perMonth.map(v=>`<td>${v?v.toLocaleString():'-'}</td>`).join('')}<td style="font-weight:900;color:var(--hero)">${total.toLocaleString()}</td></tr>`;
     });
     html+=`</tbody></table></div></div>`;
   });
-  let el=document.getElementById('t-total');
-  if(el) el.innerHTML=html;
+  let el=document.getElementById('t-total'); if(el) el.innerHTML=html;
 }
 function openBandMenu(band,section){currentBand=band;currentSection=section;document.getElementById('bandMenuTitle').textContent=band;document.getElementById('bandMenu').classList.add('open')}
 function closeBandMenu(){document.getElementById('bandMenu').classList.remove('open')}
@@ -461,13 +406,9 @@ function confirmPrompt(){const inp=document.getElementById('promptInput');if(pro
 function confirmDeleteDaily(id){showConfirm('مسح الحركة دي؟',()=>{transactions=transactions.filter(t=>t.id!==id);persist();if(curTab==='debt')renderDebt();else if(curTab==='total')renderTotal();else renderSimple(curTab);renderTotal()},true)}
 function deleteTx(){if(!editingId)return;showConfirm('مسح الحركة نهائيا؟',()=>{transactions=transactions.filter(t=>t.id!==editingId);persist();closeAdd();if(curTab==='debt')renderDebt();else if(curTab==='total')renderTotal();else renderSimple(curTab);renderTotal()},true)}
 function clearAmountOnBandChange(){try{let amt=document.getElementById(cardTab==='debt'?'a-amount-debt':cardTab==='amanat'?'a-amount-ama':'a-amount');if(amt && !editingId){ amt.value=''; amt.focus(); amt.select(); }}catch(e){}}
-
 function openAdd(){
-  editingId=null;
-  excludeFromBalanceCurrent=false;
-  try{updateExcludeBtn()}catch(e){}
-  cardTab=curTab==='total'?'expense':curTab;
-  switchCardTab(cardTab);
+  editingId=null; excludeFromBalanceCurrent=false; try{updateExcludeBtn()}catch(e){}
+  cardTab=curTab==='total'?'expense':curTab; switchCardTab(cardTab);
   let delBtn=document.getElementById('btnDelete');if(delBtn) delBtn.style.display='none';
   const todayISO=new Date().toISOString().slice(0,10);
   ['a-amount','a-amount-debt','a-amount-ama'].forEach(id=>{let el=document.getElementById(id); if(el) el.value='';});
@@ -477,111 +418,63 @@ function openAdd(){
   document.getElementById('a-date-ama').value=todayISO;
   document.getElementById('a-date-repay').value='';
   document.getElementById('addModal').classList.add('open');
-  setTimeout(()=>{
-    let el=document.getElementById(cardTab==='debt'?'a-amount-debt':cardTab==='amanat'?'a-amount-ama':'a-amount');
-    if(el){ el.focus(); try{el.select();}catch(e){} }
-  },120);
 }
 function openEdit(id){
   let t=transactions.find(x=>x.id===id); if(!t) return;
   editingId=id;
   if(t.type==='debt') cardTab='debt'; else if(t.type==='amanat') cardTab='amanat'; else if(t.type==='income') cardTab='income'; else cardTab='expense';
   switchCardTab(cardTab);
-  excludeFromBalanceCurrent=!!t.excludeFromBalance;
-  updateExcludeBtn();
+  excludeFromBalanceCurrent=!!t.excludeFromBalance; updateExcludeBtn();
   if(cardTab==='expense'||cardTab==='income'){
-    document.getElementById('a-item').value=t.item;
-    document.getElementById('a-wallet').value=t.wallet;
-    document.getElementById('a-amount').value=t.amount;
-    document.getElementById('a-date-expense').value=t.date;
+    document.getElementById('a-item').value=t.item; document.getElementById('a-wallet').value=t.wallet;
+    document.getElementById('a-amount').value=t.amount; document.getElementById('a-date-expense').value=t.date;
     document.getElementById('a-note').value=t.note||'';
   }else if(cardTab==='debt'){
-    document.getElementById('a-person-debt').value=t.person||t.item;
-    document.getElementById('a-wallet-debt').value=t.wallet;
-    document.getElementById('a-amount-debt').value=t.amount;
-    document.getElementById('a-date-debt').value=t.date;
-    document.getElementById('a-note-debt').value=t.note||'';
-    document.getElementById('a-direction').value=t.direction||'عليا';
+    document.getElementById('a-person-debt').value=t.person||t.item; document.getElementById('a-wallet-debt').value=t.wallet;
+    document.getElementById('a-amount-debt').value=t.amount; document.getElementById('a-date-debt').value=t.date;
+    document.getElementById('a-note-debt').value=t.note||''; document.getElementById('a-direction').value=t.direction||'عليا';
     document.getElementById('a-status').value=t.status||'due';
   }else if(cardTab==='amanat'){
-    document.getElementById('a-person-ama').value=t.person||t.item;
-    document.getElementById('a-amount-ama').value=t.amount;
-    document.getElementById('a-date-ama').value=t.date;
-    document.getElementById('a-note-ama').value=t.note||'';
+    document.getElementById('a-person-ama').value=t.person||t.item; document.getElementById('a-amount-ama').value=t.amount;
+    document.getElementById('a-date-ama').value=t.date; document.getElementById('a-note-ama').value=t.note||'';
   }
-  document.getElementById('btnDelete').style.display='flex';
-  document.getElementById('addModal').classList.add('open');
+  document.getElementById('btnDelete').style.display='flex'; document.getElementById('addModal').classList.add('open');
 }
-function closeAdd(){document.getElementById('addModal').classList.remove('open');editingId=null;let card=document.querySelector('#addModal .card'); if(card){card.style.transform=''; card.style.marginTop='';}}
-
+function closeAdd(){document.getElementById('addModal').classList.remove('open');editingId=null;}
 function saveTx(){
 let type=cardTab;let item,person,wallet,amount,date,note,direction,status;
 if(type==='expense'||type==='income'){
-  item=document.getElementById('a-item').value;
-  wallet=document.getElementById('a-wallet').value;
-  amount=document.getElementById('a-amount').value;
-  date=document.getElementById('a-date-expense').value;
+  item=document.getElementById('a-item').value; wallet=document.getElementById('a-wallet').value;
+  amount=document.getElementById('a-amount').value; date=document.getElementById('a-date-expense').value;
   note=document.getElementById('a-note').value;
-  if(item==='__new__'){
-    showPrompt('اسم البند الجديد', '', (newName)=>{
-      if(!newName) return; newName=newName.trim(); if(!newName) return;
-      let sec=type==='income'?'income':'expense';
-      if(masterBands.find(b=>b.name===newName && b.section===sec)){ toast('البند موجود بالفعل','err'); return; }
-      masterBands.push({id:Date.now(),name:newName,section:sec});
-      document.getElementById('a-item').innerHTML=getBands(sec).map(b=>`<option>${b}</option>`).join('')+'<option value="__new__">+ جديد</option>';
-      document.getElementById('a-item').value=newName; persist(); setTimeout(()=>saveTx(),150);
-    }); return;
-  }
+  if(item==='__new__'){ showPrompt('اسم البند الجديد', '', (newName)=>{ if(!newName) return; newName=newName.trim(); if(!newName) return; let sec=type==='income'?'income':'expense'; if(masterBands.find(b=>b.name===newName && b.section===sec)){ toast('البند موجود','err'); return; } masterBands.push({id:Date.now(),name:newName,section:sec}); document.getElementById('a-item').innerHTML=getBands(sec).map(b=>`<option>${b}</option>`).join('')+'<option value="__new__">+ جديد</option>'; document.getElementById('a-item').value=newName; persist(); setTimeout(()=>saveTx(),150); }); return; }
   person=item;
 }else if(type==='debt'){
-  item=document.getElementById('a-person-debt').value;
-  person=item; wallet=document.getElementById('a-wallet-debt').value;
-  amount=document.getElementById('a-amount-debt').value;
-  date=document.getElementById('a-date-debt').value;
-  note=document.getElementById('a-note-debt').value;
-  direction=document.getElementById('a-direction').value;
-  status=document.getElementById('a-status').value;
-  if(item==='__new__'){
-    showPrompt('اسم الشخص الجديد', '', (newName)=>{
-      if(!newName) return; newName=newName.trim(); if(!newName) return;
-      let sec=status==='due'?'debt_due':'debt_def';
-      if(masterBands.find(b=>b.name===newName && b.section===sec)){ toast('موجود بالفعل','err'); return; }
-      masterBands.push({id:Date.now(),name:newName,section:sec});
-      let all=[...getBands('debt_due'),...getBands('debt_def')];
-      document.getElementById('a-person-debt').innerHTML=all.map(b=>`<option>${b}</option>`).join('')+'<option value="__new__">+ جديد</option>';
-      document.getElementById('a-person-debt').value=newName; persist(); setTimeout(()=>saveTx(),150);
-    }); return;
-  }
+  item=document.getElementById('a-person-debt').value; person=item; wallet=document.getElementById('a-wallet-debt').value;
+  amount=document.getElementById('a-amount-debt').value; date=document.getElementById('a-date-debt').value;
+  note=document.getElementById('a-note-debt').value; direction=document.getElementById('a-direction').value; status=document.getElementById('a-status').value;
+  if(item==='__new__'){ showPrompt('اسم الشخص الجديد', '', (newName)=>{ if(!newName) return; newName=newName.trim(); if(!newName) return; let sec=status==='due'?'debt_due':'debt_def'; if(masterBands.find(b=>b.name===newName && b.section===sec)){ toast('موجود','err'); return; } masterBands.push({id:Date.now(),name:newName,section:sec}); let all=[...getBands('debt_due'),...getBands('debt_def')]; document.getElementById('a-person-debt').innerHTML=all.map(b=>`<option>${b}</option>`).join('')+'<option value="__new__">+ جديد</option>'; document.getElementById('a-person-debt').value=newName; persist(); setTimeout(()=>saveTx(),150); }); return; }
 }else if(type==='amanat'){
-  item=document.getElementById('a-person-ama').value;
-  person=item; wallet='الأمانات';
-  amount=document.getElementById('a-amount-ama').value;
-  date=document.getElementById('a-date-ama').value;
-  note=document.getElementById('a-note-ama').value;
-  if(item==='__new__'){
-    showPrompt('اسم الشخص الجديد', '', (newName)=>{
-      if(!newName) return; newName=newName.trim(); if(!newName) return;
-      if(masterBands.find(b=>b.name===newName && b.section==='amanat')){ toast('موجود','err'); return; }
-      masterBands.push({id:Date.now(),name:newName,section:'amanat'});
-      document.getElementById('a-person-ama').innerHTML=getBands('amanat').map(b=>`<option>${b}</option>`).join('')+'<option value="__new__">+ جديد</option>';
-      document.getElementById('a-person-ama').value=newName; persist(); setTimeout(()=>saveTx(),150);
-    }); return;
-  }
+  item=document.getElementById('a-person-ama').value; person=item; wallet='الأمانات';
+  amount=document.getElementById('a-amount-ama').value; date=document.getElementById('a-date-ama').value; note=document.getElementById('a-note-ama').value;
+  if(item==='__new__'){ showPrompt('اسم الشخص الجديد', '', (newName)=>{ if(!newName) return; newName=newName.trim(); if(!newName) return; if(masterBands.find(b=>b.name===newName && b.section==='amanat')){ toast('موجود','err'); return; } masterBands.push({id:Date.now(),name:newName,section:'amanat'}); document.getElementById('a-person-ama').innerHTML=getBands('amanat').map(b=>`<option>${b}</option>`).join('')+'<option value="__new__">+ جديد</option>'; document.getElementById('a-person-ama').value=newName; persist(); setTimeout(()=>saveTx(),150); }); return; }
 }
 if(!amount||Number(amount)===0){toast('اكتب القيمة أولاً','err');return}
 const payload={id:editingId||Date.now().toString(),type:type,subType:type==='debt'?(status==='due'?'debt_due':'debt_def'):type,item,person,wallet,amount:Number(amount)||0,date:date||new Date().toISOString().slice(0,10),note,direction:direction||'عليا',status:status||'',excludeFromBalance:excludeFromBalanceCurrent};
 if(editingId){const idx=transactions.findIndex(t=>t.id===editingId);if(idx>=0)transactions[idx]={...transactions[idx],...payload}}else transactions.push(payload);
 persist();closeAdd();refreshCurrent();renderTotal();toast('تم الحفظ ✅','ok');
 }
-
 (function init(){
   try{let e=document.getElementById('today');if(e)e.textContent=new Date().toLocaleDateString('ar-EG');}catch(e){}
   try{ensureMaster();}catch(e){}
-  try{if(!transactions||!transactions.length){transactions=[{id:'1',type:'expense',item:'الإيجار',person:'الإيجار',amount:1000,date:'2026-08-15',wallet:'كاش'}];persist();}}catch(e){}
   try{updateMonthLabels();}catch(e){}
   try{applyMonthToInputs();}catch(e){}
-  try{switchTab('expense');}catch(e){console.error(e);try{renderFixedSection();renderStats('expense');renderSimple('expense');renderTotal();}catch(e2){}}
+  try{switchTab('expense');}catch(e){console.error(e);}
 })();
 </script>
+<!-- حمّلهم في الآخر عشان ميغطوش على دوال daily.html -->
+<script src="themes.js"></script>
+<script src="drive.js"></script>
+<script src="data:application/javascript;base64,Ly8gYnJpZGdlIC0g2LnYtNin2YYgZGFpbHkuaHRtbCDYp9mE2YLYr9mK2YUg2KfZhNmE2Yog2KjZitmG2K/ZhyBzeW5jVG9BQk9tYXIg2YggZHJpdmUtc3luYy5qcwovLyDYqNmK2K3ZiNmEINin2YTZhtiv2KfYodin2Kog2YTZgCBkcml2ZS5qcyDYp9mE2KzYr9mK2K8Kd2luZG93LnN5bmNUb0FCT21hciA9IHdpbmRvdy5zeW5jVG9BQk9tYXIgfHwgZnVuY3Rpb24oKXsKICB0cnl7CiAgICBpZih3aW5kb3cuc2F2ZVRvRHJpdmUpIHdpbmRvdy5zYXZlVG9Ecml2ZSgpOwogICAgaWYod2luZG93LnNhdmVUb0xvY2FsKSB3aW5kb3cuc2F2ZVRvTG9jYWwoKTsKICB9Y2F0Y2goZSl7IGNvbnNvbGUubG9nKCdzeW5jIGJyaWRnZScsIGUpOyB9Cn07CmNvbnNvbGUubG9nKCfinIUgZHJpdmUtc3luYyBicmlkZ2UgbG9hZGVkJyk7Cg=="></script>
 </body>
 </html>
